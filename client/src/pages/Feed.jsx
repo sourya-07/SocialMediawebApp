@@ -1,11 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { dummyPostsData } from '../assets/assets'
+import Loading from '../components/Loading'
+import StoriesBar from '../components/StoriesBar'
 
 const Feed = () => {
-  return (
-    <div>
-      
+
+  const [feeds, setFeeds] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  const fetchFeeds = async () => {
+    setFeeds(dummyPostsData)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    setFeeds(dummyPostsData)
+  }, [])
+
+  return loading ? (
+    <div className='h-full overflow-y-scroll no-scrollbar py-10 xl:pr-5 flex items-start justify-center xl:gap-8'>
+      {/* Story and post */}
+      <div>
+        {/* <h1>Stories Here</h1> */}
+        <StoriesBar />
+        <div className='p-4 space-y-6'>
+          List of Post
+        </div>
+      </div>
+
+      {/* Right sidebar */}
+      <div>
+        <div>
+          <h1>Sponsored</h1>
+        </div>
+        <h1>Recent messages</h1>
+      </div>
     </div>
-  )
+  ) : <Loading />
 }
 
 export default Feed

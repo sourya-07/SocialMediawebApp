@@ -1,6 +1,6 @@
 import logo from './logo.svg'
 import sample_cover from './sample_cover.jpg'
-import sample_profile from './sample_profile.jpg'
+import photo from './photo.jpg'
 import bgImage from './bgImage.png'
 import group_users from './group_users.png'
 import { Home, MessageCircle, Search, UserIcon, Users } from 'lucide-react'
@@ -9,7 +9,7 @@ import sponsored_img from './sponsored_img.png'
 export const assets = {
     logo,
     sample_cover,
-    sample_profile,
+    photo,
     bgImage,
     group_users,
     sponsored_img
@@ -26,10 +26,10 @@ export const menuItemsData = [
 export const dummyUserData = {
     "_id": "user_2zdFoZib5lNr614LgkONdD8WG32",
     "email": "admin@example.com",
-    "full_name": "John Warren",
+    "full_name": "Sourya Gupta",
     "username": "john_warren",
     "bio": "🌍 Dreamer | 📚 Learner | 🚀 Doer\r\nExploring life one step at a time.\r\n✨ Staying curious. Creating with purpose.",
-    "profile_picture": sample_profile,
+    "profile_picture": photo,
     "cover_photo": sample_cover,
     "location": "New York, NY",
     "followers": ["user_2", "user_3"],
