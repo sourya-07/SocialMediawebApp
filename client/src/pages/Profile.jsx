@@ -5,6 +5,7 @@ import Loading from '../components/Loading'
 import UserProfileInfo from '../components/UserProfileInfo'
 import PostCard from '../components/PostCard'
 import moment from 'moment'
+import ProfileModal from '../components/ProfileModal'
 
 const Profile = () => {
 
@@ -12,7 +13,7 @@ const Profile = () => {
   const [user, setUser] = useState(null)
   const [posts, setPosts] = useState([])
   const [activeTab, setActiveTab] = useState('posts')
-  const [showEdit, setShowedit] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
 
   const fetchUser = async () => {
     setUser(dummyUserData)
@@ -34,7 +35,8 @@ const Profile = () => {
           </div>
 
           {/* User Info */}
-          <UserProfileInfo user={user} posts={posts} />
+          <UserProfileInfo user={user} posts={posts} setShowEdit={setShowEdit}  profileId={profileId}
+ />
         </div>
 
         {/* Tabs */}
@@ -63,7 +65,7 @@ const Profile = () => {
                     {post.image_urls.map((image, index) => (
                       <Link target='_blank' to={image} key={index} className='relative group' >
                         <img src={image} className='w-64 aspect-video object-cover' />
-                        <p className='absolute bottom-0 right-0 test-xs p-1 px-3 backdrop-blur-xl text-white opacity-0 group-hover:opacity-100 transition duration-300'>Posted {moment(post.createdAt).fromNow()}</p>
+                        <p className='absolute bottom-0 right-0 text-xs p-1 px-3 backdrop-blur-xl text-white opacity-0 group-hover:opacity-100 transition duration-300'>Posted {moment(post.createdAt).fromNow()}</p>
                       </Link>
                     ))}
                   </>
@@ -74,8 +76,7 @@ const Profile = () => {
         </div>
       </div>
       {/* Edit Profile Modal */}
-      {showEdit && <p>Show profile edit</p>}
-
+      {showEdit && <ProfileModal setShowEdit={setShowEdit} />}
     </div>
 
   ) : (<Loading />)
