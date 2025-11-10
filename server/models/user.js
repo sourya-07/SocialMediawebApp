@@ -33,18 +33,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    followers: {
+    followers: [{
         type: String,
-        ref: 'user'
-    },
-    following: {
+        ref: 'User'
+    }],
+    following: [{
         type: String,
-        ref: 'user'
-    },
-    connections: {
+        ref: 'User'
+    }],
+    connections: [{
         type: String,
-        ref: 'user'
-    },
+        ref: 'User'
+    }],
 }, {timestamps: true, minimize: false})
 
 

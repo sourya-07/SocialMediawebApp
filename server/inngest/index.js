@@ -5,6 +5,9 @@ import connectDB from "../configs/db.js";
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "pingup-app" });
 
+await connectDB();
+
+
 
 // Inngest Function to save user data to a database
 const syncUserCreation = inngest.createFunction(
@@ -12,7 +15,7 @@ const syncUserCreation = inngest.createFunction(
     {event: 'clerk/user.created'},
     async({event}) => {
         const {id, first_name, last_name, email_addresses, image_url} = event.data
-        let username = email_addresses[0].email_addresses.split('@')[0]
+        let username = email_addresses[0].email_address.split('@')[0]
 
         // check availability of username
         const user = await User.findOne({username})
