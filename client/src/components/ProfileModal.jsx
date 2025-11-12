@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { dummyUserData } from '../assets/assets'
 import { Pencil } from 'lucide-react'
+import { useSelector } from 'react-redux'
 
 const ProfileModal = ({ setShowEdit }) => {
 
-  const user = dummyUserData
+  const user = useSelector((state) => state.user.value)
   const [editForm, setEditForm] = useState({
     username: user.username,
     bio: user.bio,
@@ -14,8 +15,8 @@ const ProfileModal = ({ setShowEdit }) => {
     full_name: user.full_name
   })
 
-  const handleSaveProfile = async () => {
-    e.preventDefault()
+  const handleSaveProfile = async (e) => {
+    preventDefault()
   }
 
   return (
@@ -46,7 +47,7 @@ const ProfileModal = ({ setShowEdit }) => {
                 Cover Photo
                 <input hidden type="file" accept='image/*' id="cover_photo" className='w-full p-3 border border-gray-200 rounded-lg' onChange={(e) => setEditForm({ ...editForm, cover_photo: e.target.files[0] })} />
                 <div className='group/cover relative'>
-                  <img src={editForm.cover_photo ? URL.createObjectURL(editForm.cover_photo) : user.cover_photoq} alt="" className='w-80 h-40 rounded-lg bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 object-cover mt-2' />
+                  <img src={editForm.cover_photo ? URL.createObjectURL(editForm.cover_photo) : user.cover_photo} alt="" className='w-80 h-40 rounded-lg bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 object-cover mt-2' />
 
                   <div>
                     <Pencil className='w-5 h-5 text-white' />
