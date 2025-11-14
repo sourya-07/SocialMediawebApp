@@ -1,4 +1,4 @@
-// import api from '../../app/store.js'
+import api from '../../api/axios.js'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import toast from 'react-hot-toast'
 

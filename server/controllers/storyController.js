@@ -28,6 +28,7 @@ export const addUserStory = async (req, res) => {
             user: userId,
             content,
             media_url,
+            media_type,
             background_color
         })
 

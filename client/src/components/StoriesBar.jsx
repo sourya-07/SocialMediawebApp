@@ -4,15 +4,32 @@ import { Plus } from 'lucide-react'
 import moment from 'moment'
 import StoryModel from './StoryModal'
 import StoryViewer from './StoryViewer'
+import { useAuth } from '@clerk/clerk-react'
+import toast from 'react-hot-toast'
+import api from '../api/axios'
 
 const StoriesBar = () => {
+
+    const { getToken } = useAuth()
 
     const [stories, setStories] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [viewStory, setViewStory] = useState(null)
 
     const fetchStories = async () => {
-        setStories(dummyStoriesData)
+        try {
+            const token = await getToken()
+            const { data } = await api.get('/api/story/get', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (data.success) {
+                setStories(data.stories)
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
     useEffect(() => {
@@ -41,7 +58,7 @@ const StoriesBar = () => {
                             <p className='absolute top-18 left-3 text-white/60 text-sm truncate max-w-24'>{story.content}</p>
                             <p className='text-white absolute bottom-1 right-2 z-10 text-xs'>{moment(story.createdAt).fromNow()}</p>
                             {
-                                story.media_type !== 'text' && (
+                                story.media_type !== 'text' && story.media_url && (  // ADD: && story.media_url
                                     <div className='absolute inset-0 z-1 rounded-lg bg-black overflow-hidden'>
                                         {
                                             story.media_type === 'image' ?
@@ -59,10 +76,10 @@ const StoriesBar = () => {
             </div>
             {/* Add Story Modal */}
             {
-                showModal && <StoryModel setShowModal={setShowModal} fetchStories={fetchStories}/>
+                showModal && <StoryModel setShowModal={setShowModal} fetchStories={fetchStories} />
             }
             {/* View Story Modal */}
-            {viewStory && <StoryViewer  viewStory={viewStory} setViewStory={setViewStory}/>}
+            {viewStory && <StoryViewer viewStory={viewStory} setViewStory={setViewStory} />}
 
         </div>
     )
