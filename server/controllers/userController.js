@@ -1,13 +1,12 @@
 // Get User Data using userId
 
 import User from "../models/User.js"
-
 import fs from 'fs'
 import imagekit from "../configs/imageKit.js"
 import Connection from "../models/Connection.js"
-import { useId } from "react"
 import Post from "../models/Post.js"
 import { inngest } from "../inngest/index.js"
+// import { connection } from "mongoose"
 
 export const getUserdata = async (req, res) => {
     try {
@@ -82,7 +81,7 @@ export const updateUserData = async (req, res) => {
             const buffer = fs.readFileSync(cover.path)
             const response = await imagekit.upload({
                 file: buffer,
-                fileName: profile.originalname,
+                fileName: cover.originalname,
             })
 
             const url = imagekit.url({
@@ -222,17 +221,17 @@ export const sendConnectionRequest = async (req, res) => {
         const last24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000)
         const connectionRequests = await Connection.find({
             from_user_id: userId,
-            created_at: { $gt: last24Hours }
+            createdAt: { $gt: last24Hours }
         })
         if (connectionRequests.length >= 20) {
             return res.json({ success: false, message: 'You have sent more than 20 connection requests in the last 24 hours' })
         }
 
         // Check if the users are already connected
-        const connection = await connection.findOne({
+        const connection = await Connection.findOne({
             $or: [
-                { rom_user_id: userId, to_user_id: id },
-                { rom_user_id: id, to_user_id: userId },
+                { from_user_id: userId, to_user_id: id },
+                { from_user_id: id, to_user_id: userId },
             ]
         })
 
@@ -244,12 +243,12 @@ export const sendConnectionRequest = async (req, res) => {
 
             await inngest.send({
                 name: 'app/connection-request',
-                data: {connectionId: newConnection}
+                data: {connectionId: newConnection._id.toString()}
             })
 
             return res.json({ success: true, message: 'Connection request sent successfully.' })
-        } else if (connection && connection.status === ' accepted') {
-            return res.json({ success: false, message: 'You are already conected eith this user.' })
+        } else if (connection && connection.status === 'accepted') {
+            return res.json({ success: false, message: 'You are already connected with this user.' })
         }
 
         return res.json({ success: false, message: 'Connection request pending.' })
