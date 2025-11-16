@@ -1,4 +1,4 @@
-import logo from './logo.svg'
+import logo from './logo.jpg'
 import sample_cover from './sample_cover.jpg'
 import photo from './photo.jpg'
 import bgImage from './bgImage.png'
