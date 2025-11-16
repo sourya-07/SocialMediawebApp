@@ -243,7 +243,7 @@ export const sendConnectionRequest = async (req, res) => {
 
             await inngest.send({
                 name: 'app/connection-request',
-                data: {connectionId: newConnection._id.toString()}
+                data: { connectionId: newConnection._id.toString() }
             })
 
             return res.json({ success: true, message: 'Connection request sent successfully.' })
@@ -330,8 +330,8 @@ export const getuserProfiles = async (req, res) => {
             return res.json({ success: false, message: "Profile not found" })
         }
 
-        const posts = await Post.find({user: profileId}).populate('user')
-        res.json({success: true, profile, posts})
+        const posts = await Post.find({ user: profileId }).populate('user')
+        res.json({ success: true, profile, posts })
 
     } catch (error) {
         console.log(error)

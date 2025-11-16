@@ -13,24 +13,26 @@ const Feed = () => {
   const [feeds, setFeeds] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const {getToken} = useAuth()
+  const { getToken } = useAuth()
 
 
   const fetchFeeds = async () => {
     try {
       setLoading(true)
-      const {data} = await api.get('/api/post/feed', {headers: {
-        Authorization: `Bearer ${await getToken()}`
-      }})
+      const { data } = await api.get('/api/post/feed', {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`
+        }
+      })
 
-      if(data.success) {
+      if (data.success) {
         setFeeds(data.posts)
-      } else{
+      } else {
         toast.error(data.message)
       }
-      
+
     } catch (error) {
-        toast.error(error.message)
+      toast.error(error.message)
     }
     setLoading(false)
   }
@@ -47,7 +49,7 @@ const Feed = () => {
         <StoriesBar />
         <div className='p-4 space-y-6'>
           {feeds.map((post) => (
-            <PostCard key={post._id} post={post}/>
+            <PostCard key={post._id} post={post} />
           ))}
         </div>
       </div>
@@ -55,15 +57,15 @@ const Feed = () => {
       {/* Right sidebar */}
       <div className='max-xl:hidden sticky top-0'>
         <div className='max-w-xs bg-white text-xs p-4 rounded-md inline-flex flex-col gap-2 shadow'>
-          <h3 className='text-slate-800 font-semibold'>Sponsored</h3>
+          <h3 className='text-slate-800 font-semibold'>Daily Inspiration</h3>
           <img src={assets.sponsored_img} className='w-75 h-50 rounded-md' alt='' />
-          <p className='text-slate-600'>Email Marketing</p>
-          <p className='text-slate-400'>Supercharge your marketing with a powerful, easy-to-use platform built for results.</p>
+          <p className='text-slate-600'>"The best way to predict the future is to create it."</p>
+          <p className='text-slate-400'>Stay motivated and keep building your dreams, one post at a time.</p>
         </div>
         <RecentMessages />
       </div>
     </div>
-  ) 
+  )
 }
 
 export default Feed

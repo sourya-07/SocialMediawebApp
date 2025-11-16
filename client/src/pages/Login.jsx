@@ -19,8 +19,8 @@ const Login = () => {
             <img src={assets.group_users} alt="" className='h-8 md:h-10' />
             <div>
               <div className='flex'>
-                {Array(5).fill(0).map((_, i) => (<Star key={i} 
-                className='size-4 md:size-4.5 text-transparent fill-amber-500'/>))}
+                {Array(5).fill(0).map((_, i) => (<Star key={i}
+                  className='size-4 md:size-4.5 text-transparent fill-amber-500' />))}
               </div>
               <p>Used by 12k+ Developers</p>
             </div>

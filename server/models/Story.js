@@ -23,7 +23,7 @@ const storySchema = new mongoose.Schema({
     background_color: {
         type: String
     }
-}, {timestamps: true, minimize: false})
+}, { timestamps: true, minimize: false })
 
 
 const Story = mongoose.model('Story', storySchema)

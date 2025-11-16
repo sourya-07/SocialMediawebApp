@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux'
 
 const Profile = () => {
 
-  const currentUser = useSelector((state) => state.user.value) 
+  const currentUser = useSelector((state) => state.user.value)
   const { getToken } = useAuth()
   const { profileId } = useParams()
   const [user, setUser] = useState(null)
@@ -25,25 +25,25 @@ const Profile = () => {
     const token = await getToken()
     try {
       const { data } = await api.post(`/api/user/profiles`, { profileId }, { headers: { Authorization: `Bearer ${token}` } })
-      if(data.success){
+      if (data.success) {
         setUser(data.profile)
         setPosts(data.posts)
-      } else{
+      } else {
         toast.error(data.message)
       }
 
     } catch (error) {
       toast.error(error.message)
     }
-    
+
   }
 
   useEffect(() => {
-    if(profileId){
-    fetchUser(profileId)
-  } else if (currentUser?._id) {
-    fetchUser(currentUser._id)  
-  }
+    if (profileId) {
+      fetchUser(profileId)
+    } else if (currentUser?._id) {
+      fetchUser(currentUser._id)
+    }
   }, [profileId, currentUser?._id])
 
   return user ? (

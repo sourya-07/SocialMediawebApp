@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 //   dummyPendingConnectionsData as pendingConnections
 // } from '../assets/assets'
 
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useAuth } from '@clerk/clerk-react'
 import { fetchConnections } from '../features/connections/connectionSlice'
 import api from '../api/axios'
@@ -18,10 +18,10 @@ const Connections = () => {
 
   const [currentTab, setCurrentTab] = useState('Followers')
   const navigate = useNavigate()
-  const {getToken} = useAuth()
+  const { getToken } = useAuth()
   const dispatch = useDispatch()
 
-  const {connections, pendingConnections, followers, following} = useSelector((state) => state.connections)
+  const { connections, pendingConnections, followers, following } = useSelector((state) => state.connections)
 
   const dataArrays = [
     { label: 'Followers', value: followers, icon: Users },
@@ -32,11 +32,11 @@ const Connections = () => {
 
   const handleUnFollow = async (userId) => {
     try {
-      const {data} = await api.post('/api/user/unfolow', {id: userId}, {
-        headers: {Authorization: `Bearer ${await getToken()}`}
+      const { data } = await api.post('/api/user/unfolow', { id: userId }, {
+        headers: { Authorization: `Bearer ${await getToken()}` }
       })
 
-      if(data.success) {
+      if (data.success) {
         toast.success(data.message)
         dispatch(fetchConnections(await getToken()))
       } else {
@@ -49,11 +49,11 @@ const Connections = () => {
 
   const acceptConnection = async (userId) => {
     try {
-      const {data} = await api.post('/api/user/accept', {id: userId}, {
-        headers: {Authorization: `Bearer ${await getToken()}`}
+      const { data } = await api.post('/api/user/accept', { id: userId }, {
+        headers: { Authorization: `Bearer ${await getToken()}` }
       })
 
-      if(data.success) {
+      if (data.success) {
         toast.success(data.message)
         dispatch(fetchConnections(await getToken()))
       } else {

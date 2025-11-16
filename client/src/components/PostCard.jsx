@@ -20,10 +20,10 @@ const PostCard = ({ post }) => {
       const { data } = await api.post('/api/post/like', { postId: post._id },
         { headers: { Authorization: `Bearer ${await getToken()}` } })
 
-      if(data.success) {
+      if (data.success) {
         toast.success(data.message)
         setLikes(prev => {
-          if(prev.includes(currentUser._id)){
+          if (prev.includes(currentUser._id)) {
             return prev.filter(id => id !== currentUser._id)
           } else {
             return [...prev, currentUser._id]

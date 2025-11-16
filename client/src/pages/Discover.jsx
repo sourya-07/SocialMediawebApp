@@ -14,7 +14,7 @@ const Discover = () => {
   const [input, setInput] = useState('')
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
-  const { getToken } = useAuth()    
+  const { getToken } = useAuth()
   const dispatch = useDispatch()
 
   const handleSearch = async (e) => {
@@ -26,7 +26,7 @@ const Discover = () => {
         data.success ? setUsers(data.users) : toast.error(data.message)
         setLoading(false)
         setInput('')
-      } catch(error) {
+      } catch (error) {
         toast.error(error.message)
       }
       setLoading(false)

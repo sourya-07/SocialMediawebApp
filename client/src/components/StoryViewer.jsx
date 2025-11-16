@@ -8,7 +8,7 @@ const StoryViewer = ({ viewStory, setViewStory }) => {
     useEffect(() => {
         let timer, progressInterval
 
-        if(viewStory && viewStory.media_type != 'video') {
+        if (viewStory && viewStory.media_type != 'video') {
             setProgress(0)
 
             const duration = 10000
@@ -36,20 +36,20 @@ const StoryViewer = ({ viewStory, setViewStory }) => {
     const handleClose = () => {
         setViewStory(null)
     }
-    if(!viewStory) return null
+    if (!viewStory) return null
 
     const renderContent = () => {
         switch (viewStory.media_type) {
-            case 'image' :
-                return(
+            case 'image':
+                return (
                     <img src={viewStory.media_url} alt='' className='max-w-full max-h-screen object-contain' />
                 )
-            case 'video' :
-                return(
-                    <video onEnded={() => setViewStory(null)} src={viewStory.media_url} className='max-h-screen' controls autoPlay/>
+            case 'video':
+                return (
+                    <video onEnded={() => setViewStory(null)} src={viewStory.media_url} className='max-h-screen' controls autoPlay />
                 )
-            case 'text' :
-                return(
+            case 'text':
+                return (
                     <div className='w-full flex items-center justify-center p-8 text-white text-2xl text-center'>
                         {viewStory.content}
                     </div>

@@ -42,7 +42,7 @@ const UserCard = ({ user }) => {
       const { data } = await api.post('/api/user/connect', { id: user._id }, {
         headers: { Authorization: `Bearer ${await getToken()}` }
       })
-      
+
       console.log('connection response', data)
 
       if (data.success) {
@@ -52,7 +52,7 @@ const UserCard = ({ user }) => {
       }
     } catch (error) {
       console.log('Connection error', error)
-        toast.error(error.message)
+      toast.error(error.message)
 
     }
   }

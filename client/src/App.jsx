@@ -8,7 +8,7 @@ import Discover from './pages/Discover'
 import Profile from './pages/Profile'
 import CreatePost from './pages/CreatePost'
 import Feed from './pages/Feed'
-import {useUser, useAuth} from '@clerk/clerk-react'
+import { useUser, useAuth } from '@clerk/clerk-react'
 import Layout from './pages/Layout'
 import { Toaster } from 'react-hot-toast'
 import { useEffect } from 'react'
@@ -17,14 +17,14 @@ import { fetchUser } from './features/user/userSlice.js'
 import { fetchConnections } from './features/connections/connectionSlice.js'
 
 const App = () => {
-  const {user} = useUser()
+  const { user } = useUser()
   const { getToken } = useAuth()
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchData = async () => {
-      if(user) {
+      if (user) {
         const token = await getToken()
         console.log('Token:', token, 'User:', user.id)
         dispatch(fetchUser(token))
@@ -38,7 +38,7 @@ const App = () => {
     <>
       <Toaster />
       <Routes>
-        <Route path='/' element={ !user ? <Login /> : <Layout /> }>
+        <Route path='/' element={!user ? <Login /> : <Layout />}>
           <Route index element={<Feed />} />
           <Route path='messages' element={<Messages />} />
           <Route path='messages/:userId' element={<ChatBox />} />

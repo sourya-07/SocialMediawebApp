@@ -71,14 +71,14 @@ export const sendMessage = async (req, res) => {
         // Send message to to_user_id using SSE
         const messageWithUserData = await Message.findById(message._id).populate('from_user_id')
 
-if (connections[to_user_id]) {
-    connections[to_user_id].write(`data: ${JSON.stringify(messageWithUserData)}\n\n`)
-}
+        if (connections[to_user_id]) {
+            connections[to_user_id].write(`data: ${JSON.stringify(messageWithUserData)}\n\n`)
+        }
 
-// ALSO send to the sender (userId) so they see it in real-time too
-if (connections[userId]) {
-    connections[userId].write(`data: ${JSON.stringify(messageWithUserData)}\n\n`)
-}
+        // ALSO send to the sender (userId) so they see it in real-time too
+        if (connections[userId]) {
+            connections[userId].write(`data: ${JSON.stringify(messageWithUserData)}\n\n`)
+        }
 
 
     } catch (error) {

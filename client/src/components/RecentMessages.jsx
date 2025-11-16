@@ -8,19 +8,19 @@ import toast from 'react-hot-toast'
 
 const RecentMessages = () => {
   const [messages, setMessages] = useState([])
-  const {user} = useUser()
-  const {getToken} = useAuth()
+  const { user } = useUser()
+  const { getToken } = useAuth()
 
   const fetchRecentMessages = async () => {
     try {
       const token = await getToken()
-      const {data} = await api.get('/api/user/recent-messages', {
-        headers: {Authorization: `Bearer ${token}`}
+      const { data } = await api.get('/api/user/recent-messages', {
+        headers: { Authorization: `Bearer ${token}` }
       })
-      if(data.success){
+      if (data.success) {
         const groupedMessages = data.messages.reduce((acc, message) => {
           const senderId = message.from_user_id._id
-          if(!acc[senderId] || new Date(message.createdAt) > new Date(acc[senderId].createdAt)){
+          if (!acc[senderId] || new Date(message.createdAt) > new Date(acc[senderId].createdAt)) {
             acc[senderId] = message
           }
           return acc
@@ -30,20 +30,20 @@ const RecentMessages = () => {
         const sortedMessages = Object.values(groupedMessages).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
         setMessages(sortedMessages)
-      } else{
+      } else {
         toast.error(error.message)
       }
     } catch (error) {
       toast.error(error.message)
-      
+
     }
   }
 
   useEffect(() => {
-    if(user) {
+    if (user) {
       fetchRecentMessages()
       setInterval(fetchRecentMessages, 30000)
-      return () => {clearInterval}
+      return () => { clearInterval }
     }
     fetchRecentMessages()
   }, [user])

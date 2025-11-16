@@ -37,20 +37,20 @@ const ChatBox = () => {
     const eventSource = new EventSource(`http://localhost:4000/api/message/${currentUser._id}`)
 
     eventSource.onmessage = (event) => {
-  try {
-    const newMessage = JSON.parse(event.data)
-    // Extract IDs - from_user_id might be populated object
-    const fromId = typeof newMessage.from_user_id === 'object' ? newMessage.from_user_id._id : newMessage.from_user_id
-    const toId = newMessage.to_user_id
-    
-    // Only add message if it's part of current conversation
-    if (fromId === userId || toId === userId) {
-      dispatch(addMessages(newMessage))
+      try {
+        const newMessage = JSON.parse(event.data)
+        // Extract IDs - from_user_id might be populated object
+        const fromId = typeof newMessage.from_user_id === 'object' ? newMessage.from_user_id._id : newMessage.from_user_id
+        const toId = newMessage.to_user_id
+
+        // Only add message if it's part of current conversation
+        if (fromId === userId || toId === userId) {
+          dispatch(addMessages(newMessage))
+        }
+      } catch (error) {
+        console.error('Error parsing SSE message:', error)
+      }
     }
-  } catch (error) {
-    console.error('Error parsing SSE message:', error)
-  }
-}
 
 
     eventSource.onerror = (error) => {
